@@ -1,0 +1,11 @@
+# Core dependencies
+opencv-python>=4.8.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# YOLOv8 (downloads weights automatically on first run)
+ultralytics>=8.0.0
+
+# Optional: GPU acceleration (uncomment if you have CUDA)
+# torch>=2.0.0+cu118
+# torchvision>=0.15.0+cu118
