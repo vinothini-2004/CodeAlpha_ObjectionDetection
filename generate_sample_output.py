@@ -1,9 +1,3 @@
-"""
-generate_sample_output.py
-Generates a realistic sample output frame (no camera/model needed).
-Run: python generate_sample_output.py
-"""
-
 import cv2
 import numpy as np
 import os
@@ -36,7 +30,6 @@ def draw_box(img, x1, y1, x2, y2, tid, cls_id, conf, trail=None):
 def main():
     os.makedirs("output", exist_ok=True)
 
-    # ── background: a simple "road scene" ────────────────────────────────────
     frame = np.zeros((H, W, 3), dtype=np.uint8)
     # sky
     frame[:H//2, :] = (140, 100, 60)
@@ -48,7 +41,6 @@ def main():
     # horizon line
     cv2.line(frame, (0, H//2), (W, H//2), (60,60,60), 2)
 
-    # ── tracked objects ───────────────────────────────────────────────────────
     objects = [
         # (x1, y1, x2, y2, tid, cls_id, conf, trail_pts)
         (60,  170, 180, 430, 1, 0, 0.91,
@@ -70,14 +62,12 @@ def main():
     for (x1,y1,x2,y2,tid,cls_id,conf,trail) in objects:
         draw_box(frame, x1, y1, x2, y2, tid, cls_id, conf, trail)
 
-    # ── HUD ──────────────────────────────────────────────────────────────────
     cv2.rectangle(frame, (0,0), (310, 85), (20,20,20), -1)
     cv2.putText(frame, "FPS : 28.4",      (8, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0,255,0),  2)
     cv2.putText(frame, "Det : 5",          (8, 44), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0,200,255),2)
     cv2.putText(frame, "Trk : 5",          (8, 66), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255,200,0),2)
     cv2.putText(frame, "[YOLOv8n+SORT]", (130, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.55,(200,100,255),2)
 
-    # ── title banner ─────────────────────────────────────────────────────────
     cv2.rectangle(frame, (0, H-38), (W, H), (10,10,10), -1)
     cv2.putText(frame,
                 "Object Detection & Tracking  |  YOLOv8 + SORT  |  Sample Output",
@@ -87,7 +77,7 @@ def main():
     cv2.imwrite(out, frame)
     print(f"[OK] Saved → {out}")
 
-    # ── also save a legend image ──────────────────────────────────────────────
+   
     legend = np.zeros((200, 400, 3), dtype=np.uint8)
     legend[:] = (25,25,25)
     cv2.putText(legend, "Legend", (10,30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255,255,255), 2)
